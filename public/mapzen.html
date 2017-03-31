@@ -19,28 +19,20 @@
     </style>
   </head>
   <body>
-
-    <select>
-      <option value="BubbleWrap" selected>BubbleWrap</option>
-      <option value="Refill" selected>Refill</option>
-    </select>
+    <div>
+      <a href="/"></a>
+    </div>
     <div id="map"></div>
     <script>
       // Mapzen API key (replace key with your own)
       // To generate your own key, go to https://mapzen.com/developers/
       L.Mapzen.apiKey = 'mapzen-JA21Wes';
       
-
-      // scene: [
-      //  'BubbleWrap', 'BubbleWrapMoreLabels', 'BubbleWrapNoLabels', 'Cinnabar', Refill, BubbleWrap
-      // 
       var map = L.Mapzen.map('map', {
         center: [22.2888, 114.1794],
         zoom: 12,
         scene: L.Mapzen.BasemapStyles.Refill
       });
-
-      
 
       // Mapzen search box
       var geocoder = L.Mapzen.geocoder();
