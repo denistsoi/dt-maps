@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mapzen</title>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <style>
+      #content {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+      }
+      #map {
+        height: 100%;
+        width: 100%;
+        position: relative;
+      }
+      html, body { margin: 0; padding: 0 }
+      header { position: absolute; top: 0; background-color: #191a1a; color: #929292; }
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <div id="map"></div>
+    </div>
+    <script>
+      var mymap = L.map('map').setView([22.2888, 114.1794], 13);
+      // create the tile layer with correct attribution
+      var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+      var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
+
+      var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+
+      mymap.addLayer(osm);
+    </script>
+  </body>
+</html>
+
