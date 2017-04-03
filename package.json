@@ -1,7 +1,7 @@
 {
-  "name": "dt-webpack",
+  "name": "dt-maps",
   "version": "0.1.0",
-  "description": "agnostic webpack configuration for frontend development;\"",
+  "description": "Static fileserver using zeit/serve. Experiments with Maps",
   "main": "server.js",
   "scripts": {
     "test": "NA",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/denistsoi/dt-webpack.git"
+    "url": "git+https://github.com/denistsoi/dt-maps.git"
   },
   "keywords": [
     "webpack",
@@ -18,9 +18,9 @@
   "author": "Denis Tsoi <denistsoi@gmail.com> (https://github.com/denistsoi)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/denistsoi/dt-webpack/issues"
+    "url": "https://github.com/denistsoi/dt-maps/issues"
   },
-  "homepage": "https://github.com/denistsoi/dt-webpack#readme",
+  "homepage": "https://github.com/denistsoi/dt-maps#readme",
   "dependencies": {
     "angular": "^1.6.3",
     "babel": "^6.23.0",
@@ -31,7 +31,6 @@
     "css-loader": "^0.27.3",
     "debug": "^2.6.3",
     "ejs": "^2.5.6",
-    "espress": "0.0.0",
     "express": "^4.15.2",
     "extract-text-webpack-plugin": "^2.1.0",
     "globby": "^6.1.0",

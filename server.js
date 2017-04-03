@@ -44,6 +44,8 @@ app.get('/', (req,res)=>{
   res.render('index');
 });
 
+// may need to use routes to pass in process env vars
+
 app.listen(port, ()=>{
   debug('server is listening to port: ', port);
 });

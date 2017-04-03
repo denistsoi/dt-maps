@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>Mapbox</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.34.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+<div id='map'></div>
+<script>
+
+// add your api token here
+mapboxgl.accessToken = 'pk.eyJ1IjoiZGVuaXN0c29pIiwiYSI6ImNqMTFrMmZtbTAwNGozM3J4bnd0OGs3c3YifQ.SEZUnLM3DShOt40H75ROqA';
+
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/dark-v9',
+  zoom: 12,
+  center: [114.1794, 22.2888]
+});
+
+map.on('load', function() {
+  map.addLayer({
+    'id': '3d-buildings',
+    'source': 'composite',
+    'source-layer': 'building',
+    'filter': ['==', 'extrude', 'true'],
+    'type': 'fill-extrusion',
+    'minzoom': 15,
+    'paint': {
+        'fill-extrusion-color': '#aaa',
+        'fill-extrusion-height': {
+            'type': 'identity',
+            'property': 'height'
+        },
+        'fill-extrusion-base': {
+            'type': 'identity',
+            'property': 'min_height'
+        },
+        'fill-extrusion-opacity': .6
+    }
+  });
+});
+
+</script>
+
+</body>
+</html>

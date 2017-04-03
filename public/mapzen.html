@@ -4,25 +4,45 @@
     <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="styles/style.css" rel="stylesheet">
-    <title>Bells and Whistles</title>
+    <title>Mapzen</title>
     <meta charset="utf-8">
     <link rel="stylesheet" href="https://mapzen.com/js/mapzen.css">
     <script src="https://mapzen.com/js/mapzen.min.js"></script>
     <style>
-      #map {
+      /*#map {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+      }*/
+      #content {
         height: 100%;
         width: 100%;
         position: absolute;
       }
+      #map {
+        height: 100%;
+        width: 100%;
+        position: relative;
+      }
+      /*.sidebar {
+        height: 80%;
+        left: 0;
+        position: absolute;
+        z-index: 500;
+        width: 300px;
+        background-color: rgba(0,0,0,.5);
+      }*/
       html, body { margin: 0; padding: 0 }
+      header { position: absolute; top: 0; background-color: #191a1a; color: #929292; }
     </style>
   </head>
   <body>
-    <div>
-      <a href="/"></a>
+    <div id="content">
+      <div class="sidebar">
+        <option>
+      </div>
+      <div id="map"></div>
     </div>
-    <div id="map"></div>
     <script>
       // Mapzen API key (replace key with your own)
       // To generate your own key, go to https://mapzen.com/developers/
