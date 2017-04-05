@@ -8,9 +8,12 @@ TODO:
 - [ ] mapbox version
 - [ ] 
 
-    leaflet/
-    mapzen/
-    mapbox/
+    public/
+        styles/
+        leaflet.html        // leaflet example
+        mapzen.html         // mapzen example
+        mapbox.html         // mapbox example
+        osm-mapbox.html     // osm-mapbox example
 
 ### author   
 Denis Tsoi <denistsoi@gmail.com>  
