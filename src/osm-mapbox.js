@@ -1,4 +1,4 @@
-var osm = function() {
+function osm() {
   mapboxgl.accessToken = 'NOT-REQUIRED-WITH-YOUR-VECTOR-TILES-DATA';
 
   var map = new mapboxgl.Map({
@@ -9,6 +9,4 @@ var osm = function() {
   });
 }
 
-osm();
-
-exports = module.exports = osm;
+exports = module.exports = osm();

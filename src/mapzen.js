@@ -27,6 +27,4 @@ function mapzen() {
   });      
 }
 
-mapzen();
-
-exports = module.exports = mapzen;
+exports = module.exports = mapzen();

@@ -33,6 +33,5 @@ function mapbox() {
     });
   });
 }
-mapbox();
 
-exports = module.exports = mapbox;
+exports = module.exports = mapbox();
