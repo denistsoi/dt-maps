@@ -1,4 +1,4 @@
-import MAPBOX_API_KEY from '../config/env';
+import { MAPBOX_API_KEY } from '../config/env';
 
 function mapbox() {
   mapboxgl.accessToken = MAPBOX_API_KEY;

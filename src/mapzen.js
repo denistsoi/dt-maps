@@ -1,4 +1,4 @@
-import MAPZEN_API_KEY from '../config/env';
+import { MAPZEN_API_KEY } from '../config/env';
 
 function mapzen() {
   // Mapzen API key (replace key with your own)
