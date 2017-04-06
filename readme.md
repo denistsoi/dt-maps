@@ -3,10 +3,15 @@
 sample mapping visualisations playground  
 
 TODO: 
-- [ ] ie 10 version  
 - [x] mapzen/tangram version  
 - [x] mapbox version  
 - [x] leaflet version
+- [x] osm-mapbox version
+
+OTHERS:
+- [ ] popup/dialog-box
+- [ ] marker clustering
+- [ ] marker filtering
 
 ### project directory
 
