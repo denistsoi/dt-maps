@@ -11,14 +11,12 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 // use path
 const outputDir = `${__dirname}/dist`;
-const folders = globby.sync([
-  `${__dirname}/src/controllers/**/*.js`,
-  `${__dirname}/src/components/**/*.js`
-]);
+// const folders = globby.sync([
+//   `${__dirname}/src/controllers/**/*.js`,
+//   `${__dirname}/src/components/**/*.js`
+// ]);
 
-let webpackentry = {
-  bundle: `${__dirname}/src/index.js`
-}
+let webpackentry = {}
 
 /**
  * glob source directory,
@@ -35,22 +33,31 @@ let webpackentry = {
  * return <obj> webpackentry;
  */
 
-const srcDir = 'src/';
-const folderNames = folders
-  .map((folder) => {
-    // manipulate the path and format such that folder/function-name.js
-    let path = folder.slice(0, folder.lastIndexOf('/'));
-    let pathLastIndex = path.lastIndexOf(srcDir);
-    let nameSplit = path.slice(pathLastIndex + srcDir.length).split('/');
-    let name = [nameSplit.slice(0, 1), nameSplit.slice(1).join('-')].join('/');
+const srcDir = 'src';
+webpackentry['mapbox'] = __dirname + '/src/mapbox.js';
+webpackentry['mapzen'] = __dirname + '/src/mapzen.js';
 
-    // error handling with duplicate name    
-    if (webpackentry[name] !== undefined) {
-      debug(`WARNING!!! \nName: ${name} is already taken. \nAffected folders: \nSubfolder ${webpackentry[name]} \nIsolated folder: ${folder}`);
-      throw new Error('Can not override webpack entry with duplicate name');
-    }
-    webpackentry[name] = folder;
-  });
+// const pathFiles = globby.sync(__dirname + "src/**")
+//   .map((path)=> {
+//     let filename = path.split('src/').pop();
+//     webpackentry[filename] = path;
+// });
+
+// const folderNames = folders
+//   .map((folder) => {
+//     // manipulate the path and format such that folder/function-name.js
+//     let path = folder.slice(0, folder.lastIndexOf('/'));
+//     let pathLastIndex = path.lastIndexOf(srcDir);
+//     let nameSplit = path.slice(pathLastIndex + srcDir.length).split('/');
+//     let name = [nameSplit.slice(0, 1), nameSplit.slice(1).join('-')].join('/');
+
+//     // error handling with duplicate name    
+//     if (webpackentry[name] !== undefined) {
+//       debug(`WARNING!!! \nName: ${name} is already taken. \nAffected folders: \nSubfolder ${webpackentry[name]} \nIsolated folder: ${folder}`);
+//       throw new Error('Can not override webpack entry with duplicate name');
+//     }
+//     webpackentry[name] = folder;
+//   });
 
 
 const config = {
