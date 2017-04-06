@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "NA",
-    "start": "serve public",
+    "start": "node server",
     "clean": "rm -rf dist && npm run build",
     "build": "webpack"
   },

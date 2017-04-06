@@ -30,6 +30,9 @@ const middleware = webpackMiddleware(compiler, {
 
 const app = express();
 
+const fs = require('fs');
+const files = fs.readdirSync('./public/')
+
 app.engine('html', cons.ejs);
 app.set('view engine', 'html');
 app.set('views', `${__dirname}/views`);
@@ -41,7 +44,10 @@ app.use(express.static(`${__dirname}/dist`));
 app.use(quesadilla(`${__dirname}/styles`));
 
 app.get('/', (req,res)=>{
-  res.render('index');
+
+  res.render('index', {
+    files: files
+  });
 });
 
 // may need to use routes to pass in process env vars
