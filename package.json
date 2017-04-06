@@ -1,11 +1,13 @@
 {
   "name": "dt-maps",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Static fileserver using zeit/serve. Experiments with Maps",
   "main": "server.js",
   "scripts": {
     "test": "NA",
-    "start": "serve public"
+    "start": "serve public",
+    "clean": "rm -rf dist && npm run build",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
