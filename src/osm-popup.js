@@ -36,7 +36,6 @@ var osmpopup = function() {
   };
 
   map.on('load', function () {
-
       map.addLayer({
           "id": "points",
           "type": "symbol",
@@ -56,16 +55,29 @@ var osmpopup = function() {
     
   });    
 
+  // set popup for clicking on feature
   map.on('click', function(e) {
     var features = map.queryRenderedFeatures(e.point, {
       layers: ['points']
     });
+
+    // no features near coordinates of click
+    if (!features.length) {
+      return;
+    }
 
     var feature = features[0];
 
     popup.setLngLat(feature.geometry.coordinates)
       .setText(feature.properties.title)
       .addTo(map);
+  });
+
+  // Use the same approach as above to indicate that the symbols are clickable
+  // by changing the cursor style to 'pointer'.
+  map.on('mousemove', function (e) {
+      var features = map.queryRenderedFeatures(e.point, { layers: ['places'] });
+      map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
   });
 };
 
