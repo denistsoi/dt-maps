@@ -1,6 +1,6 @@
 var Chart = require('chart.js');
 
-var data = {
+var templatedata = {
     labels: [
         "Lights",
         "Water",
@@ -8,7 +8,6 @@ var data = {
     ],
     datasets: [
         {
-            data: [100, 50, 200],
             backgroundColor: [
                 "#FFCE56",
                 "#36A2EB",
@@ -17,19 +16,18 @@ var data = {
         }]
 };
 
-var generateChart = function(popup) {
+var generateChart = function(popup, data) {
+    console.log(popup, JSON.parse(data));
+    templatedata.datasets[0].data = JSON.parse(data);
+
     var canvasEl = popup._content.childNodes[0];
     var chart = new Chart(canvasEl, {
         type: 'pie',
-        data: data
+        data: templatedata
     })
 };
 
 var osmpopup = function() {
-  var popup = new mapboxgl.Popup({
-    closeButton: false
-  });
-  
   var map = new mapboxgl.Map({
       container: 'map',
       style: './styles/basic-v9-cdn.json',
@@ -48,7 +46,21 @@ var osmpopup = function() {
         "properties": {
             "title": "hk",
             "icon": "marker",
-            "description": `<canvas id="chart"></canvas>`
+            "description": `<canvas id="chart"></canvas>`,
+            "data": [100, 50, 200]
+        }
+    },
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [114.1412, 22.283797]
+        },
+        "properties": {
+            "title": "other",
+            "icon": "marker",
+            "description": `<canvas id="chart"></canvas>`,
+            "data": [20, 10, 100]
         }
     }]
   };
@@ -70,12 +82,9 @@ var osmpopup = function() {
               "text-anchor": "top"
           }
       });
-      map.on('mousemove', function (e) {
-          var features = map.queryRenderedFeatures(e.point, { layers: ['points'] });
-          map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
-      });
-      
+
       map.on('click', function(e) {
+        console.log("what am i clicking on?", e);
         var features = map.queryRenderedFeatures(e.point, {
           layers: ['points']
         });
@@ -87,12 +96,20 @@ var osmpopup = function() {
 
         var feature = features[0];
 
-        popup.setLngLat(feature.geometry.coordinates)
+        var popup = new mapboxgl.Popup({
+            closeButton: false
+        }).setLngLat(feature.geometry.coordinates)
           .setHTML(feature.properties.description)
           .addTo(map);
 
-        generateChart(popup);
+        generateChart(popup, feature.properties.data);
       });
+
+      map.on('mousemove', function (e) {
+          var features = map.queryRenderedFeatures(e.point, { layers: ['points'] });
+          map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
+      });
+      
   });
 };
 

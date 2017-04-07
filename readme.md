@@ -9,18 +9,21 @@ TODO:
 - [x] osm-mapbox version
 
 OTHERS:
-- [ ] popup/dialog-box
-- [ ] marker clustering
-- [ ] marker filtering
+- [x] popup/dialog-box  
+- [ ] marker clustering  
+- [ ] marker filtering  
 
 ### project directory
 
     public/
         styles/
-        leaflet.html        // leaflet example
-        mapzen.html         // mapzen example
-        mapbox.html         // mapbox example
-        osm-mapbox.html     // osm-mapbox example
+        leaflet.html         // leaflet example  
+        mapzen.html          // mapzen example  
+        mapbox.html          // mapbox example  
+        osm-chart.html       // osm-chart example  
+        osm-mapbox.html      // osm-mapbox example  
+        osm-popup.html       // osm-popup example  
+        osm-svg-chart.html   // osm-svg-chart example  
 
 ### how to develop
 
