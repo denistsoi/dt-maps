@@ -19,7 +19,7 @@ var osmpopup = function() {
             "coordinates": [-74.480312, 40.798174]
         },
         "properties": {
-            "title": "g-hub usa",
+            "title": "usa",
             "icon": "marker"
         }
     }, {
@@ -76,7 +76,10 @@ var osmpopup = function() {
   // Use the same approach as above to indicate that the symbols are clickable
   // by changing the cursor style to 'pointer'.
   map.on('mousemove', function (e) {
-      var features = map.queryRenderedFeatures(e.point, { layers: ['places'] });
+      var features = map.queryRenderedFeatures(e.point, { layers: ['points'] });
+      if (!features.length) {
+        return;
+      }
       map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
   });
 };
