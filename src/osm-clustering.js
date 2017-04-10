@@ -32,7 +32,7 @@ var osmpopup = function() {
       container: 'map',
       style: './styles/basic-v9-cdn.json',
       center: [114.1794, 22.2888],
-      zoom: 12,
+      zoom: 3,
   });
 
   var geojson = {
@@ -54,7 +54,20 @@ var osmpopup = function() {
         "type": "Feature",
         "geometry": {
             "type": "Point",
-            "coordinates": [114.1412, 22.283797]
+            "coordinates": [114.2012, 22.283797]
+        },
+        "properties": {
+            "title": "somewhere else",
+            "icon": "marker",
+            "description": `<canvas id="chart"></canvas>`,
+            "data": [20, 10, 100]
+        }
+    },    
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [114.1912, 22.283797]
         },
         "properties": {
             "title": "other",
@@ -66,27 +79,66 @@ var osmpopup = function() {
   };
 
   map.on('load', function () {
+    map.addSource("points", {
+        type: "geojson",
+        data: geojson,
+        cluster: true,
+        clusterMaxZoom: 14, // Max zoom to cluster points on
+        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+    });
+
+    map.addLayer({
+        "id": "unclustered-points",
+        "type": "symbol",
+        "source": "points",
+        "filter": ["!has", "point_count"],
+        "layout": {
+            "icon-image": "marker-15",
+            "text-field": "{title}",
+            "text-font": ["Open Sans Semibold"],
+            "text-offset": [0, 0.6],
+            "text-anchor": "top"
+        }
+    });
+
+      var layers = [
+          [5, '#f28cb1'],
+          [2, '#f1f075'],
+          [0, '#51bbd6']
+      ];
+
+      layers.forEach(function (layer, i) {
+        map.addLayer({
+            "id": "cluster-" + i,
+            "type": "circle",
+            "source": "points",
+            "paint": {
+                "circle-color": layer[1],
+                "circle-radius": 18
+            },
+            "filter": i === 0 ?
+                [">=", "point_count", layer[0]] :
+                ["all",
+                    [">=", "point_count", layer[0]],
+                    ["<", "point_count", layers[i - 1][0]]]
+        });
+      });
+
       map.addLayer({
-          "id": "points",
-          "type": "symbol",
-          "source": {
-              "type": "geojson",
-              "cluster": true,
-              "data": geojson
-          },
-          "layout": {
-              "icon-image": "{icon}-15",
-              "text-field": "{title}",
-              "text-font": ["Open Sans Semibold"],
-              "text-offset": [0, 0.6],
-              "text-anchor": "top"
-          }
+        "id": "cluster-count",
+        "type": "symbol",
+        "source": "points",
+        "layout": {
+            "text-field": "{point_count}",
+            "text-font": ["Open Sans Semibold"],
+            "text-size": 12
+        }
       });
 
       map.on('click', function(e) {
         console.log("what am i clicking on?", e);
         var features = map.queryRenderedFeatures(e.point, {
-          layers: ['points']
+          layers: ['unclustered-points']
         });
 
         // no features near coordinates of click
@@ -106,7 +158,7 @@ var osmpopup = function() {
       });
 
       map.on('mousemove', function (e) {
-          var features = map.queryRenderedFeatures(e.point, { layers: ['points'] });
+          var features = map.queryRenderedFeatures(e.point, { layers: ['unclustered-points'] });
           map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
       });
   });
