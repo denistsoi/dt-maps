@@ -1,3 +1,5 @@
+import Locations from './locations';
+
 var osmpopup = function() {
   var popup = new mapboxgl.Popup({
     closeButton: false
@@ -10,30 +12,7 @@ var osmpopup = function() {
       zoom: 12
   });
 
-  var geojson = {
-    "type": "FeatureCollection",
-    "features": [{
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": [-74.480312, 40.798174]
-        },
-        "properties": {
-            "title": "usa",
-            "icon": "marker"
-        }
-    }, {
-        "type": "Feature",
-        "geometry": {
-            "type": "Point",
-            "coordinates": [114.192412, 22.283797]
-        },
-        "properties": {
-            "title": "g-hub hk",
-            "icon": "marker"
-        }
-    }]
-  };
+  var geojson = Locations;
 
   map.on('load', function () {
       map.addLayer({
