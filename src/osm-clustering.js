@@ -35,6 +35,8 @@ var osmpopup = function() {
       zoom: 3,
   });
 
+  window.map = map;
+
   var geojson = {
     "type": "FeatureCollection",
     "features": [{
@@ -54,10 +56,36 @@ var osmpopup = function() {
         "type": "Feature",
         "geometry": {
             "type": "Point",
-            "coordinates": [114.2012, 22.283797]
+            "coordinates": [113.924, 22.310]
         },
         "properties": {
-            "title": "somewhere else",
+            "title": "airport",
+            "icon": "marker",
+            "description": `<canvas id="chart"></canvas>`,
+            "data": [20, 10, 100]
+        }
+    },    
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [114.180, 22.304]
+        },
+        "properties": {
+            "title": "poly u",
+            "icon": "marker",
+            "description": `<canvas id="chart"></canvas>`,
+            "data": [20, 10, 100]
+        }
+    }, 
+    {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [114.2432, 22.266]
+        },
+        "properties": {
+            "title": "somewhere",
             "icon": "marker",
             "description": `<canvas id="chart"></canvas>`,
             "data": [20, 10, 100]
@@ -94,10 +122,12 @@ var osmpopup = function() {
         "filter": ["!has", "point_count"],
         "layout": {
             "icon-image": "marker-15",
+            "icon-size": 1.5,
             "text-field": "{title}",
             "text-font": ["Open Sans Semibold"],
             "text-offset": [0, 0.6],
             "text-anchor": "top"
+                     
         }
     });
 
@@ -136,13 +166,46 @@ var osmpopup = function() {
       });
 
       map.on('click', function(e) {
-        console.log("what am i clicking on?", e);
+        // console.log("what am i clicking on?", e);
         var features = map.queryRenderedFeatures(e.point, {
           layers: ['unclustered-points']
         });
+        var clusters = map.queryRenderedFeatures(e.point, {
+          layers: ['cluster-0', 'cluster-1', 'cluster-2']
+        });
 
         // no features near coordinates of click
-        if (!features.length) {
+        if (!features.length && !clusters.length) {
+          return;
+        }
+
+        if (clusters.length) {
+          var cluster = clusters[0];
+          
+          var coordinates = cluster.geometry.coordinates;
+
+          // console.log(clusters, coordinates);
+          // var sw = new mapboxgl.LngLat(coordinates[0] - 1, coordinates[1] - 1);
+          // var ne = new mapboxgl.LngLat(coordinates[0] + 1, coordinates[1] + 1);
+          // var a = new mapboxgl.LngLat(113.498443603516,  22.23385475992968);
+          // var b = new mapboxgl.LngLat(114.69498443603516, 22.33385475992968);
+          // map.fitBounds(new mapboxgl.LngLatBounds(sw,ne))
+          
+          // var bounds = coordinates.reduce(function(bounds, coord) {
+          //   console.log(bounds, coord);
+          //   return bounds.extend(coord);
+          // }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+
+          // console.log(bounds);
+          // map.fitBounds(bounds, {
+          //   padding: 20
+          // });
+          // console.log(e, cluster);
+          map.flyTo({
+            center: [e.lngLat.lng, e.lngLat.lat],
+            zoom: map.getZoom() + 3
+          })
+          // map.setView(e.latLng, map.getZoom() + 1);
           return;
         }
 
