@@ -32,6 +32,7 @@ const app = express();
 
 const fs = require('fs');
 const files = fs.readdirSync('./public/')
+// const files = fs.readdirSync('./views/maps/')
 
 app.engine('html', cons.ejs);
 app.set('view engine', 'html');
@@ -44,7 +45,6 @@ app.use(express.static(`${__dirname}/dist`));
 app.use(quesadilla(`${__dirname}/styles`));
 
 app.get('/', (req,res)=>{
-
   res.render('index', {
     files: files
   });

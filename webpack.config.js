@@ -17,7 +17,9 @@ const sourceDir = 'src';
  * append files in source directory to webpackentry
  */
 
-let webpackentry = {}
+let webpackentry = {
+  vendor: 'chart.js'
+}
 
 const glob = globby.sync(`${__dirname}/${sourceDir}/*.js`)
   .map((file)=>{
@@ -50,6 +52,11 @@ const config = {
       }
     ]
   },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: ['vendor', 'manifest']
+    })
+  ],
   resolve: {
     // alias: {
     //   "app": path.resolve(__dirname, "src/app.js"),

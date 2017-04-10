@@ -1,4 +1,4 @@
-var Chart = require('chart.js');
+import Chart from 'chart.js';
 
 var templatedata = {
     labels: [
@@ -84,7 +84,6 @@ var osmpopup = function() {
       });
 
       map.on('click', function(e) {
-        console.log("what am i clicking on?", e);
         var features = map.queryRenderedFeatures(e.point, {
           layers: ['points']
         });
@@ -109,7 +108,6 @@ var osmpopup = function() {
           var features = map.queryRenderedFeatures(e.point, { layers: ['points'] });
           map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
       });
-      
   });
 };
 
