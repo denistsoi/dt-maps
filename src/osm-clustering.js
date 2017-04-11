@@ -32,8 +32,9 @@ var osmpopup = function() {
   var map = new mapboxgl.Map({
       container: 'map',
       style: './styles/basic-v9-cdn.json',
+      // glyphs: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
       center: [114.1794, 22.2888],
-      zoom: 3,
+      zoom: 10,
   });
 
   window.map = map;
@@ -63,6 +64,27 @@ var osmpopup = function() {
             "text-anchor": "top"
         }
     });
+
+    // map.addLayer({
+    //     "id": "unclustered-points",
+    //     "type": "symbol",
+    //     "source": "points",
+    //     "filter": ["!has", "point_count"],
+    //     "layout": {
+    //         // "icon-image": "marker-15",
+    //         // "icon-size": 1.5,
+            
+    //         'text-line-height': 1, // this is to avoid any padding around the "icon"
+    //         'text-padding': 0,
+    //         'text-anchor': 'bottom', // change if needed, "bottom" is good for marker style icons like in my screenshot,
+    //         'text-allow-overlap': true, // assuming you want this, you probably do
+    //         "text-field": "\f041",
+    //         // 'text-field': iconString, // IMPORTANT SEE BELOW: -- this should be the unicode character you're trying to render as a string -- NOT the character code but the actual character,
+    //         'icon-optional': true, // since we're not using an icon, only text.
+    //         'text-font': ['FontAwesome'], // see step 1 -- whatever the icon font name,
+    //         'text-size': 18 
+    //     }
+    // });
 
       var layers = [
           [5, '#f28cb1'],
@@ -144,13 +166,19 @@ var osmpopup = function() {
 
         var feature = features[0];
 
-        var popup = new mapboxgl.Popup({
+        map.flyTo({
+          center: [e.lngLat.lng, e.lngLat.lat]
+        });
+        
+        setTimeout(function() {
+          var popup = new mapboxgl.Popup({
             closeButton: false
         }).setLngLat(feature.geometry.coordinates)
           .setHTML(feature.properties.description)
           .addTo(map);
 
         generateChart(popup, feature.properties.data);
+        }, 100);
       });
 
       map.on('mousemove', function (e) {
