@@ -1,5 +1,6 @@
 import Chart from 'chart.js';
 import Locations from './locations';
+import mapbox from 'mapbox-gl';
 
 var templatedata = {
     labels: [
@@ -22,7 +23,7 @@ var generateChart = function(popup, data) {
 
     var canvasEl = popup._content.childNodes[0];
     var chart = new Chart(canvasEl, {
-        type: 'pie',
+        type: 'doughnut',
         data: templatedata
     })
 };
@@ -36,6 +37,7 @@ var osmpopup = function() {
   });
 
   window.map = map;
+  window.mb = mapbox;
 
   map.on('load', function () {
     

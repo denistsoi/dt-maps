@@ -37,6 +37,7 @@
     "express": "^4.15.2",
     "extract-text-webpack-plugin": "^2.1.0",
     "globby": "^6.1.0",
+    "mapbox-gl": "^0.35.0",
     "quesadilla": "^2.2.0",
     "serve": "^5.1.2",
     "webpack": "^2.3.2",
