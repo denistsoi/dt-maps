@@ -1,3 +1,5 @@
+import mapboxgl from 'mapbox-gl';
+
 function osm() {
   mapboxgl.accessToken = 'NOT-REQUIRED-WITH-YOUR-VECTOR-TILES-DATA';
 
@@ -9,4 +11,4 @@ function osm() {
   });
 }
 
-exports = module.exports = osm();
+exports = module.exports = osm(); 
