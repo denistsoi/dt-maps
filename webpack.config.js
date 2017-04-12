@@ -18,7 +18,11 @@ const sourceDir = 'src';
  */
 
 let webpackentry = {
-  vendor: 'chart.js'
+  vendor: [
+    'chart.js',
+    'mapbox-gl',
+    'supercluster',
+  ]
 }
 
 const glob = globby.sync(`${__dirname}/${sourceDir}/*.js`)
