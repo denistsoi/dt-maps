@@ -62,6 +62,9 @@ const config = {
     })
   ],
   resolve: {
+    alias: {
+      "Locations": path.resolve(__dirname, 'src/locations/')
+    }
     // alias: {
     //   "app": path.resolve(__dirname, "src/app.js"),
     //   "lib": path.resolve(__dirname, "src/lib"),

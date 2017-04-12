@@ -1,5 +1,5 @@
 import Chart from 'chart.js';
-import Locations from './locations';
+import GeoJson from 'Locations/hong-kong';
 import mapboxgl from 'mapbox-gl';
 import supercluster from 'supercluster';
 
@@ -32,7 +32,7 @@ var generateChart = function(popup, data) {
 var osmpopup = function() {
   var map = new mapboxgl.Map({
       container: 'map',
-      style: './styles/basic-v9-cdn.json',
+      style: './styles/ghub.json',
       center: [114.1794, 22.2888],
       zoom: 4,
   });
@@ -42,9 +42,10 @@ var osmpopup = function() {
   window.supercluster = supercluster;
 
   map.on('load', function () {
-    
-    var co = Locations.features[0].geometry.coordinates;
-    var bounds = Locations.features.reduce(function (bounds, feature) {
+    var locations = GeoJson;
+
+    var co = locations.features[0].geometry.coordinates;
+    var bounds = locations.features.reduce(function (bounds, feature) {
       return bounds.extend(feature.geometry.coordinates);
     }, new mapboxgl.LngLatBounds(co[0].lng, co[0].lat));
 
@@ -52,7 +53,7 @@ var osmpopup = function() {
     
     map.addSource("points", {
         type: "geojson",
-        data: Locations,
+        data: locations,
         cluster: true,
         clusterMaxZoom: 14, // Max zoom to cluster points on
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
@@ -78,7 +79,7 @@ var osmpopup = function() {
         maxZoom: 20
     });
 
-    i.load(Locations.features);
+    i.load(locations.features);
     window.i = i;
 
       var layers = [
