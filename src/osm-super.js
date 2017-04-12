@@ -73,26 +73,13 @@ var osmpopup = function() {
         }
     });
 
-    // map.addLayer({
-    //     "id": "unclustered-points",
-    //     "type": "symbol",
-    //     "source": "points",
-    //     "filter": ["!has", "point_count"],
-    //     "layout": {
-    //         // "icon-image": "marker-15",
-    //         // "icon-size": 1.5,
-            
-    //         'text-line-height': 1, // this is to avoid any padding around the "icon"
-    //         'text-padding': 0,
-    //         'text-anchor': 'bottom', // change if needed, "bottom" is good for marker style icons like in my screenshot,
-    //         'text-allow-overlap': true, // assuming you want this, you probably do
-    //         "text-field": "\f041",
-    //         // 'text-field': iconString, // IMPORTANT SEE BELOW: -- this should be the unicode character you're trying to render as a string -- NOT the character code but the actual character,
-    //         'icon-optional': true, // since we're not using an icon, only text.
-    //         'text-font': ['FontAwesome'], // see step 1 -- whatever the icon font name,
-    //         'text-size': 18 
-    //     }
-    // });
+    var i = supercluster({
+        radius: 50,
+        maxZoom: 20
+    });
+
+    i.load(Locations.features);
+    window.i = i;
 
       var layers = [
           [5, '#f28cb1'],
@@ -148,28 +135,11 @@ var osmpopup = function() {
           
           var coordinates = cluster.geometry.coordinates;
 
-          console.log(e, clusters, coordinates);
-          // var sw = new mapboxgl.LngLat(coordinates[0] - 1, coordinates[1] - 1);
-          // var ne = new mapboxgl.LngLat(coordinates[0] + 1, coordinates[1] + 1);
-          // var a = new mapboxgl.LngLat(113.498443603516,  22.23385475992968);
-          // var b = new mapboxgl.LngLat(114.69498443603516, 22.33385475992968);
-          // map.fitBounds(new mapboxgl.LngLatBounds(sw,ne))
-          
-          // var bounds = coordinates.reduce(function(bounds, coord) {
-          //   console.log(bounds, coord);
-          //   return bounds.extend(coord);
-          // }, new mapboxgl.LngLatBounds(coordinates[0], coordinates[0]));
+          map.flyTo({
+            center: [e.lngLat.lng, e.lngLat.lat],
+            zoom: i.getClusterExpansionZoom(0, Math.floor(map.getZoom()))
+          });
 
-          // console.log(bounds);
-          // map.fitBounds(bounds, {
-          //   padding: 20
-          // });
-          // console.log(e, cluster);
-          // map.flyTo({
-          //   center: [e.lngLat.lng, e.lngLat.lat],
-          //   zoom: map.getZoom() + 3
-          // })
-          // map.setView(e.latLng, map.getZoom() + 1);
           return;
         }
 
