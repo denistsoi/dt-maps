@@ -40,6 +40,7 @@
     "mapbox-gl": "^0.35.0",
     "quesadilla": "^2.2.0",
     "serve": "^5.1.2",
+    "supercluster": "^2.3.0",
     "webpack": "^2.3.2",
     "webpack-dev-middleware": "^1.10.1",
     "webpack-hot-middleware": "^2.17.1"

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8' />
+    <title>MapBox GL JS with osm2vectortiles Example</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <!--<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.0/mapbox-gl.js'></script>-->
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.35.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="https://unpkg.com/supercluster@2.3.0/dist/supercluster.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+        #info {
+            display: block;
+            position: relative;
+            margin: 0px auto;
+            width: 50%;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            font-size: 12px;
+            text-align: center;
+            color: #222;
+            background: #fff;
+            height: 48px;
+            box-sizing: border-box;
+        }        
+    </style>
+</head>
+<body>
+
+<div id='map'></div>
+<pre id="info"></pre>
+<script src="manifest.js"></script>
+<script src="vendor.js"></script>
+<script src="osm-mapbox.js"></script>
+<script src="osm-super.js"></script>
+</body>
+</html>
