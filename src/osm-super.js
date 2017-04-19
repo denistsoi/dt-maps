@@ -32,7 +32,7 @@ var generateChart = function(popup, data) {
 var osmpopup = function() {
   var map = new mapboxgl.Map({
       container: 'map',
-      style: './styles/ghub.json',
+      style: './styles/bright-v9-cdn.json',
       center: [114.1794, 22.2888],
       zoom: 4,
   });
@@ -50,7 +50,7 @@ var osmpopup = function() {
     }, new mapboxgl.LngLatBounds(co[0].lng, co[0].lat));
 
     map.fitBounds(bounds, { padding: 50 });
-    
+
     map.addSource("points", {
         type: "geojson",
         data: locations,
@@ -59,20 +59,38 @@ var osmpopup = function() {
         clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
     });
 
+    // map.addLayer({
+    //     "id": "unclustered-points",
+    //     "type": "symbol",
+    //     "source": "points",
+    //     "filter": ["!has", "point_count"],
+    //     "layout": {
+    //         "icon-image": "marker-15",
+    //         "icon-size": 1.5,
+    //         "text-field": "{title}",
+    //         "text-font": ["Open Sans Semibold"],
+    //         "text-offset": [0, 0.6],
+    //         "text-anchor": "top"
+    //     }
+    // });
+
     map.addLayer({
         "id": "unclustered-points",
-        "type": "symbol",
+        "type": "circle",
         "source": "points",
         "filter": ["!has", "point_count"],
-        "layout": {
-            "icon-image": "marker-15",
-            "icon-size": 1.5,
-            "text-field": "{title}",
-            "text-font": ["Open Sans Semibold"],
-            "text-offset": [0, 0.6],
-            "text-anchor": "top"
-        }
+        "paint": {
+          "circle-color": '#f28cb1',
+          "circle-radius": 8
+        },
+        // "layout": {
+        //     "text-field": "{title}",
+        //     "text-font": ["Open Sans Semibold"],
+        //     "text-offset": [0, 0.6],
+        //     "text-anchor": "top"
+        // }
     });
+
 
     var i = supercluster({
         radius: 50,
@@ -133,7 +151,7 @@ var osmpopup = function() {
 
         if (clusters.length) {
           var cluster = clusters[0];
-          
+
           var coordinates = cluster.geometry.coordinates;
 
           map.flyTo({
@@ -149,7 +167,7 @@ var osmpopup = function() {
         map.flyTo({
           center: [e.lngLat.lng, e.lngLat.lat]
         });
-        
+
         setTimeout(function() {
           var popup = new mapboxgl.Popup({
             closeButton: false
