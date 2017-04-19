@@ -35,9 +35,9 @@ var osmpopup = function() {
     map.addSource("points", {
         type: "geojson",
         data: locations,
-        // cluster: true,
-        // clusterMaxZoom: 14, // Max zoom to cluster points on
-        // clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+        cluster: true,
+        clusterMaxZoom: 14, // Max zoom to cluster points on
+        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
     });
 
     map.addLayer({
@@ -74,10 +74,23 @@ var osmpopup = function() {
     // i.load(locations.features);
     // window.i = i;
 
-    // var layers = [
-    //   [5, '#f1f075'],
-    //   [2, '#51bbd6']
-    // ];
+    var layer = [
+      [2, '#f1f075'],
+    ];
+
+    map.addLayer({
+      "id": "cluster-0",
+      "type": "circle",
+      "source": "points",
+      "paint": {
+        "circle-color": layer[0][1],
+        "circle-radius": 18
+      },
+      filter: ["all",
+        [">=", "point_count", layer[0][0]],
+      ]
+    });
+
     //
     // layers.forEach(function (layer, i) {
     //   map.addLayer({
@@ -97,16 +110,16 @@ var osmpopup = function() {
     // });
 
     // adds number count to cluster
-    // map.addLayer({
-    //   "id": "cluster-count",
-    //   "type": "symbol",
-    //   "source": "points",
-    //   "layout": {
-    //       "text-field": "{point_count}",
-    //       "text-font": ["Open Sans Semibold"],
-    //       "text-size": 12
-    //   }
-    // });
+    map.addLayer({
+      "id": "cluster-count",
+      "type": "symbol",
+      "source": "points",
+      "layout": {
+          "text-field": "{point_count}",
+          "text-font": ["Open Sans Semibold"],
+          "text-size": 12
+      }
+    });
 
     map.on('click', function(e) {
       var features = map.queryRenderedFeatures(e.point, {
@@ -115,11 +128,14 @@ var osmpopup = function() {
 
       // var clusters = map.queryRenderedFeatures(e.point, {
       //   // layers: ['cluster-0', 'cluster-1', 'cluster-2']
-      //   layers: ['cluster-0', 'cluster-1']
+      //   layers: ['cluster-0']
       // });
 
       // no features near coordinates of click
-      if (!features.length && !clusters.length) {
+      // if (!features.length && !clusters.length) {
+      //   return;
+      // }
+      if (!features.length) {
         return;
       }
 
@@ -177,23 +193,10 @@ var osmpopup = function() {
 
       console.log('FILTERED: ', `value ${value}`, filtered);
 
-      map.setFilter('unclustered-points', ['in', 'title'].concat(filtered.map((feature)=>{
-        return feature.properties.title;
-      })));
-      map.setFilter('unclustered-points-label', ['in', 'title'].concat(filtered.map((feature)=>{
-        return feature.properties.title;
-      })));
-
-      // map.setFilter('cluster-0', ['in', 'title'].concat(filtered.map((feature)=>{
-      //   return feature.properties.title;
-      // })));
-
-      // map.setFilter('cluster-1', ['in', 'title'].concat(filtered.map((feature)=>{
-      //   return feature.properties.title;
-      // })));
-      // map.setFilter('cluster-count', ['in', 'title'].concat(filtered.map((feature)=>{
-      //   return feature.properties.title;
-      // })));
+      map.getSource('points').setData({
+        "type": "FeatureCollection",
+        "features": filtered
+      });
 
     })
 
